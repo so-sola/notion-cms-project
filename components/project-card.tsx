@@ -11,16 +11,20 @@ const MAX_VISIBLE_TAGS = 3
 
 interface ProjectCardProps {
   project: Project
+  featured?: boolean
 }
 
-function ProjectCard({ project }: ProjectCardProps) {
+function ProjectCard({ project, featured }: ProjectCardProps) {
   const visibleTags = project.tags.slice(0, MAX_VISIBLE_TAGS)
   const overflowCount = project.tags.length - visibleTags.length
 
   const cardBody = (
     // Image를 div로 감싸면 Card의 `img:first-child` 기반 셀렉터가 매치되지 않으므로
     // 썸네일이 있을 때는 pt-0을 직접 지정해 이미지를 카드 상단에 밀착시킨다
-    <Card className={cn(project.thumbnailUrl && "pt-0")}>
+    <Card className={cn(project.thumbnailUrl && "pt-0", featured && "relative")}>
+      {featured && (
+        <Badge className="absolute left-2 top-2 z-10">Featured</Badge>
+      )}
       {project.thumbnailUrl ? (
         <div className="relative aspect-video w-full overflow-hidden rounded-t-xl">
           <Image

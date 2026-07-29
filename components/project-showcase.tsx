@@ -10,6 +10,8 @@ import { ProjectCard } from "@/components/project-card"
 import { TagFilter } from "@/components/tag-filter"
 import type { Project } from "@/types/project"
 
+const FEATURED_COUNT = 3
+
 interface ProjectShowcaseProps {
   projects: Project[]
 }
@@ -25,6 +27,17 @@ function ProjectShowcase({ projects }: ProjectShowcaseProps) {
     [searchParams]
   )
   const mode = searchParams.get("mode") === "and" ? "AND" : "OR"
+
+  const featuredIds = useMemo(
+    () =>
+      new Set(
+        projects
+          .filter((p) => p.order !== null)
+          .slice(0, FEATURED_COUNT)
+          .map((p) => p.id)
+      ),
+    [projects]
+  )
 
   const tagCounts = useMemo(() => {
     const counts: Record<string, number> = {}
@@ -117,7 +130,11 @@ function ProjectShowcase({ projects }: ProjectShowcaseProps) {
       ) : (
         <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+            <ProjectCard
+              key={project.id}
+              project={project}
+              featured={featuredIds.has(project.id)}
+            />
           ))}
         </div>
       )}

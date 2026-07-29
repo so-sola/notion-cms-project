@@ -22,4 +22,10 @@ export interface Project {
   process: string
   /** 케이스 스터디: 결과 */
   result: string
+  /** 프로젝트 진행 기간 */
+  period: string
+  /** 담당 역할 */
+  role: string
+  /** 팀 구성 */
+  team: string
 }

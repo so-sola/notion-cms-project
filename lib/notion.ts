@@ -49,6 +49,9 @@ function parseProject(page: PageObjectResponse): Project {
   const goal = properties['목표']
   const process = properties['과정']
   const result = properties['결과']
+  const period = properties['기간']
+  const role = properties['역할']
+  const team = properties['팀 구성']
 
   if (
     title.type !== 'title' ||
@@ -60,7 +63,10 @@ function parseProject(page: PageObjectResponse): Project {
     problemDefinition.type !== 'rich_text' ||
     goal.type !== 'rich_text' ||
     process.type !== 'rich_text' ||
-    result.type !== 'rich_text'
+    result.type !== 'rich_text' ||
+    period.type !== 'rich_text' ||
+    role.type !== 'rich_text' ||
+    team.type !== 'rich_text'
   ) {
     throw new Error(`Notion 프로젝트 속성 타입이 예상과 다릅니다 (page id: ${page.id})`)
   }
@@ -78,6 +84,9 @@ function parseProject(page: PageObjectResponse): Project {
     goal: getPlainText(goal.rich_text),
     process: getPlainText(process.rich_text),
     result: getPlainText(result.rich_text),
+    period: getPlainText(period.rich_text),
+    role: getPlainText(role.rich_text),
+    team: getPlainText(team.rich_text),
   }
 }
 

@@ -74,6 +74,28 @@ export default async function ProjectDetailPage(
               ))}
             </div>
           )}
+          {(project.period || project.role || project.team) && (
+            <dl className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
+              {project.period && (
+                <div className="flex items-center gap-1.5">
+                  <dt className="font-medium text-foreground">기간</dt>
+                  <dd>{project.period}</dd>
+                </div>
+              )}
+              {project.role && (
+                <div className="flex items-center gap-1.5">
+                  <dt className="font-medium text-foreground">역할</dt>
+                  <dd>{project.role}</dd>
+                </div>
+              )}
+              {project.team && (
+                <div className="flex items-center gap-1.5">
+                  <dt className="font-medium text-foreground">팀 구성</dt>
+                  <dd>{project.team}</dd>
+                </div>
+              )}
+            </dl>
+          )}
         </div>
 
         {project.link && (
