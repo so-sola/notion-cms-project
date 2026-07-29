@@ -32,10 +32,10 @@
       "name": "골격 완료 기준 검증 (next dev / Tailwind / shadcn)",
       "description": "ROADMAP.md 1단계 완료 기준 중 코드로 검증 가능한 3개 항목을 실제로 확인한다: (1) next dev로 빈 페이지가 정상 구동되는지, (2) Tailwind 클래스가 실제로 적용되는지 (globals.css 및 기존 컴포넌트에서 샘플 확인), (3) shadcn/ui 컴포넌트를 1개 이상 추가 가능한 상태인지 (components.json 설정과 CLI 동작 확인). 새로운 코드를 작성하지 않고 기존 스타터킷 설정이 기준을 충족하는지 검증만 한다.",
       "notes": "이 태스크는 검증 전용이며 코드/설정 파일을 수정하지 않는다. dev 서버는 확인 후 반드시 종료한다.",
-      "status": "pending",
+      "status": "completed",
       "dependencies": [],
       "createdAt": "2026-07-29T03:19:39.629Z",
-      "updatedAt": "2026-07-29T03:19:39.629Z",
+      "updatedAt": "2026-07-29T04:59:24.776Z",
       "relatedFiles": [
         {
           "path": "app/globals.css",
@@ -55,21 +55,23 @@
       ],
       "implementationGuide": "pseudocode:\n1. `npm run dev` (또는 `next dev`) 백그라운드 실행 후 정상 기동 로그 확인, 이후 종료\n2. app/globals.css에 Tailwind directive(@import 'tailwindcss' 등, v4 방식) 존재 확인 및 app/page.tsx 등 기존 컴포넌트에서 Tailwind 유틸리티 클래스 사용 여부 grep\n3. components.json 내용 확인 (style: base-nova, aliases 등)으로 shadcn CLI 추가 가능 상태인지 판단 — 실제로 컴포넌트를 추가하지는 않음 (불필요한 변경 방지)\n4. 세 항목 결과를 ROADMAP.md 체크리스트와 대조해 정리",
       "verificationCriteria": "next dev 정상 기동 로그를 확인했고, Tailwind directive와 유틸리티 클래스 사용 사례를 찾았으며, components.json이 shadcn CLI 추가에 필요한 설정을 갖추고 있음을 확인했다는 근거가 보고서에 기록된다.",
-      "analysisResult": "ROADMAP.md 1단계(프로젝트 초기 설정/골격 구축)의 최종 목표는 완료 기준 5개 항목(next dev 정상 구동, Tailwind 적용 확인, shadcn/ui 컴포넌트 추가 가능, Notion Integration 연결, Notion DB 필드 전체 생성)을 충족시키는 것이다. 코드베이스 조사 결과 Next.js 16 + TypeScript + Tailwind + shadcn/ui(base-nova) + ESLint 골격은 스타터킷에서 이미 완비되어 있어 재구성하지 않는다. 실질적으로 남은 코드 작업은 .env.example 생성뿐이며, types/ 디렉토리는 git이 빈 폴더를 추적하지 않고 ROADMAP 완료 기준에도 명시되지 않으므로 2단계(types/project.ts 생성 시)로 이월한다. Notion Integration 생성 및 DB 스키마 구성(7개 필드)은 Notion.so 웹 UI에서만 가능한 외부 작업이므로 코드 작업과 분리해 사용자 액션 태스크로 명시한다. 모든 작업은 shrimp-rules.md의 금지 사항(MVP 범위 밖 기능 금지, .env.local 커밋 금지, 2단계 범위 선제 구현 금지)을 준수한다."
+      "analysisResult": "ROADMAP.md 1단계(프로젝트 초기 설정/골격 구축)의 최종 목표는 완료 기준 5개 항목(next dev 정상 구동, Tailwind 적용 확인, shadcn/ui 컴포넌트 추가 가능, Notion Integration 연결, Notion DB 필드 전체 생성)을 충족시키는 것이다. 코드베이스 조사 결과 Next.js 16 + TypeScript + Tailwind + shadcn/ui(base-nova) + ESLint 골격은 스타터킷에서 이미 완비되어 있어 재구성하지 않는다. 실질적으로 남은 코드 작업은 .env.example 생성뿐이며, types/ 디렉토리는 git이 빈 폴더를 추적하지 않고 ROADMAP 완료 기준에도 명시되지 않으므로 2단계(types/project.ts 생성 시)로 이월한다. Notion Integration 생성 및 DB 스키마 구성(7개 필드)은 Notion.so 웹 UI에서만 가능한 외부 작업이므로 코드 작업과 분리해 사용자 액션 태스크로 명시한다. 모든 작업은 shrimp-rules.md의 금지 사항(MVP 범위 밖 기능 금지, .env.local 커밋 금지, 2단계 범위 선제 구현 금지)을 준수한다.",
+      "summary": "next dev/Tailwind/shadcn 3개 항목을 코드 수정 없이 검증했다. (1) 이미 실행 중인 next-server(v16.2.12) 프로세스(PID 49714, 포트 3000)에 curl 요청 시 HTTP 200과 함께 정상 렌더링된 HTML을 반환함을 확인. (2) app/globals.css에 Tailwind v4 방식 디렉티브(@import \"tailwindcss\")가 있고, app/page.tsx 및 렌더링된 HTML 모두에서 border-b, flex, grid, py-20 등 유틸리티 클래스가 실제 적용됨을 확인. (3) components.json에 style: base-nova, tailwind.css: app/globals.css, aliases(@/components, @/lib 등)가 올바르게 설정되어 있어 npx shadcn add 로 컴포넌트 추가가 가능한 상태임을 확인. 세 항목 모두 ROADMAP.md 1단계 완료 기준을 충족한다. 코드/설정 파일은 전혀 수정하지 않았고, 새로 dev 서버를 띄우지도 않았다(기존 프로세스만 조회).",
+      "completedAt": "2026-07-29T04:59:24.773Z"
     },
     {
       "id": "a83fddaa-1614-4834-b5da-d7c3112febc7",
       "name": "Notion Integration 생성 및 DB 스키마 구성 (사용자 액션)",
       "description": "ROADMAP.md 1단계 완료 기준 중 코드로 자동화할 수 없는 2개 항목을 사용자가 Notion.so에서 직접 수행하도록 안내하고 완료 여부를 확인받는다: (1) Notion Integration을 생성하고 대상 데이터베이스에 연결(공유)한다, (2) 대상 데이터베이스에 PRD.md에 명시된 7개 필드(제목/설명/썸네일/태그/링크/공개여부/정렬순서)를 정확한 타입으로 생성한다.",
       "notes": "이 태스크는 외부 웹 UI 작업으로 코드 변경이 없다. Claude는 안내만 제공하며 실행은 사용자가 한다. NOTION_API_KEY/NOTION_DATABASE_ID 실제 값은 이 과정에서 얻게 되며 .env.local에 사용자가 직접 붙여넣도록 안내한다 (Claude가 값을 요청하거나 저장하지 않음).",
-      "status": "pending",
+      "status": "completed",
       "dependencies": [
         {
           "taskId": "5577bfc7-cc1e-4444-a807-e0264f833504"
         }
       ],
       "createdAt": "2026-07-29T03:19:39.629Z",
-      "updatedAt": "2026-07-29T03:19:39.629Z",
+      "updatedAt": "2026-07-29T04:34:53.648Z",
       "relatedFiles": [
         {
           "path": "docs/PRD.md",
@@ -84,7 +86,388 @@
       ],
       "implementationGuide": "pseudocode:\n1. 사용자에게 Notion.so에서 Integration 생성 방법 안내 (Notion 설정 > Integrations > New integration)\n2. 생성된 Integration을 대상 데이터베이스 페이지에서 '연결(Connect to)' 처리하도록 안내\n3. 데이터베이스 필드를 PRD.md 표 그대로 생성하도록 안내: 제목(Title), 설명(Text), 썸네일(Files & media), 태그(Multi-select), 링크(URL), 공개여부(Checkbox), 정렬순서(Number, 선택)\n4. 완료 후 사용자로부터 확인 받기 (코드 작업 아님, Claude가 대신 수행 불가)",
       "verificationCriteria": "사용자가 Notion Integration 생성 및 대상 DB 연결을 완료했고, PRD.md에 명시된 7개 필드가 정확한 타입으로 데이터베이스에 생성되었음을 사용자가 확인해준다.",
-      "analysisResult": "ROADMAP.md 1단계(프로젝트 초기 설정/골격 구축)의 최종 목표는 완료 기준 5개 항목(next dev 정상 구동, Tailwind 적용 확인, shadcn/ui 컴포넌트 추가 가능, Notion Integration 연결, Notion DB 필드 전체 생성)을 충족시키는 것이다. 코드베이스 조사 결과 Next.js 16 + TypeScript + Tailwind + shadcn/ui(base-nova) + ESLint 골격은 스타터킷에서 이미 완비되어 있어 재구성하지 않는다. 실질적으로 남은 코드 작업은 .env.example 생성뿐이며, types/ 디렉토리는 git이 빈 폴더를 추적하지 않고 ROADMAP 완료 기준에도 명시되지 않으므로 2단계(types/project.ts 생성 시)로 이월한다. Notion Integration 생성 및 DB 스키마 구성(7개 필드)은 Notion.so 웹 UI에서만 가능한 외부 작업이므로 코드 작업과 분리해 사용자 액션 태스크로 명시한다. 모든 작업은 shrimp-rules.md의 금지 사항(MVP 범위 밖 기능 금지, .env.local 커밋 금지, 2단계 범위 선제 구현 금지)을 준수한다."
+      "analysisResult": "ROADMAP.md 1단계(프로젝트 초기 설정/골격 구축)의 최종 목표는 완료 기준 5개 항목(next dev 정상 구동, Tailwind 적용 확인, shadcn/ui 컴포넌트 추가 가능, Notion Integration 연결, Notion DB 필드 전체 생성)을 충족시키는 것이다. 코드베이스 조사 결과 Next.js 16 + TypeScript + Tailwind + shadcn/ui(base-nova) + ESLint 골격은 스타터킷에서 이미 완비되어 있어 재구성하지 않는다. 실질적으로 남은 코드 작업은 .env.example 생성뿐이며, types/ 디렉토리는 git이 빈 폴더를 추적하지 않고 ROADMAP 완료 기준에도 명시되지 않으므로 2단계(types/project.ts 생성 시)로 이월한다. Notion Integration 생성 및 DB 스키마 구성(7개 필드)은 Notion.so 웹 UI에서만 가능한 외부 작업이므로 코드 작업과 분리해 사용자 액션 태스크로 명시한다. 모든 작업은 shrimp-rules.md의 금지 사항(MVP 범위 밖 기능 금지, .env.local 커밋 금지, 2단계 범위 선제 구현 금지)을 준수한다.",
+      "summary": "사용자가 Notion.so에서 Integration 생성 및 대상 데이터베이스 연결, PRD.md 명시 7개 필드(제목/설명/썸네일/태그/링크/공개여부/정렬순서) 생성을 직접 완료했다고 확인해주었다. .env.local에 NOTION_API_KEY(50자), NOTION_DATABASE_ID(32자) 값이 채워져 있음을 값 내용은 노출하지 않고 길이만 검사해 확인했고, git status/check-ignore로 .env.local이 커밋되지 않는 상태임을 재확인했다.",
+      "completedAt": "2026-07-29T04:34:53.642Z"
+    },
+    {
+      "id": "41f8f9c9-3cde-4669-98be-06b3818b92cb",
+      "name": "types/project.ts 프로젝트 타입 정의",
+      "description": "PRD.md의 Notion DB 7개 필드(제목/설명/썸네일/태그/링크/공개여부/정렬순서)와 1:1 매핑되는 Project 타입을 types/project.ts에 정의한다. shrimp-rules.md 5절에 고정된 파일 위치를 그대로 따른다.",
+      "notes": "이 파일은 순수 타입 정의만 포함하고 런타임 로직을 넣지 않는다. lib/notion.ts에서 import해 사용한다.",
+      "status": "completed",
+      "dependencies": [],
+      "createdAt": "2026-07-29T05:03:51.815Z",
+      "updatedAt": "2026-07-29T05:10:15.763Z",
+      "relatedFiles": [
+        {
+          "path": "types/project.ts",
+          "type": "CREATE",
+          "description": "PRD 7필드와 1:1 매핑되는 Project 타입 정의"
+        },
+        {
+          "path": "docs/PRD.md",
+          "type": "REFERENCE",
+          "description": "Notion DB 필드 스펙(타입/매핑) 원본"
+        },
+        {
+          "path": "shrimp-rules.md",
+          "type": "REFERENCE",
+          "description": "5절 - Notion CMS 데이터 계층 표준 및 고정 필드 매핑표"
+        }
+      ],
+      "implementationGuide": "pseudocode:\nexport interface Project {\n  id: string; // Notion page id\n  title: string; // 제목\n  description: string; // 설명\n  thumbnailUrl: string | null; // 썸네일 (files 파일 없을 수 있음)\n  tags: string[]; // 태그 (multi_select name 배열)\n  link: string | null; // 링크 (url 프로퍼티, 비어있을 수 있음)\n  isPublished: boolean; // 공개여부\n  order: number | null; // 정렬순서 (선택 필드)\n}\n\n타입 필드명은 영어 camelCase(전역 CLAUDE.md 규칙), 주석은 한국어로 Notion 필드명을 병기해 매핑 관계를 명확히 한다.",
+      "verificationCriteria": "types/project.ts가 존재하고 Project 인터페이스가 title/description/thumbnailUrl/tags/link/isPublished/order 7개 필드(+id)를 포함하며, 각 필드 타입이 대응하는 Notion 속성 타입과 합리적으로 매핑된다(tsc 타입 오류 없음).",
+      "analysisResult": "ROADMAP.md 2단계(공통 모듈/컴포넌트 개발) 완료가 최종 목표. 산출물: (1) types/project.ts - PRD 7필드와 1:1 매핑되는 Project 타입, (2) lib/notion.ts - @notionhq/client 기반 클라이언트 초기화, database_id→data_source_id 조회(메모이즈), Notion 페이지→Project 매핑 파서, 공개여부=true 필터+정렬순서 오름차순 정렬을 쿼리 단계에서 처리하는 getPublishedProjects(), (3) 실제 Notion DB 연동 검증(임시 API 라우트로 확인 후 삭제) 및 기존 공통 UI 프리미티브(Card/Badge/Skeleton, 이미 존재) 재사용 가능 상태 확인. context7(/websites/developers_notion_reference) 조사로 확인된 사실: 최신 Notion API(2025-09-03+)는 databases.query가 아니라 database_id로 databases.retrieve() 후 얻은 data_source_id로 dataSources.query()를 호출해야 하며, filter/sorts는 쿼리 파라미터로 전달한다. 속성 파싱: title/rich_text는 rich text 배열(plain_text 합치기), files는 type별 external.url/file.url, multi_select는 {name}[] 추출, checkbox는 boolean, number는 number|null, url은 string|null. app/page.tsx 교체(3단계 범위), 로딩/에러 UI 조립(4단계 범위), ISR/캐싱 전략(5단계 범위)은 이번 2단계에서 다루지 않는다. MVP 범위 밖(상세페이지/검색/페이지네이션/방문자분석/다국어) 금지.",
+      "summary": "types/project.ts에 Project 인터페이스를 생성했다. id 외 title/description/thumbnailUrl/tags/link/isPublished/order 7개 필드가 PRD.md의 제목/설명/썸네일/태그/링크/공개여부/정렬순서와 1:1 매핑되며, 각 필드 위에 한국어 주석으로 원본 Notion 필드명을 병기했다. thumbnailUrl/link/order는 값이 없을 수 있어 null 허용 타입으로 정의했다. 순수 타입 정의만 포함하고 런타임 로직은 없다. 작업 중 이 프로젝트(notion-cms-project)에 node_modules가 아직 설치되지 않은 상태임을 발견해 npm install을 실행했다(기존에 실행 중이던 dev 서버는 원본 스타터킷 디렉토리(claude-nextjs-starters)의 것이었고 이 프로젝트와는 무관했음 - 1단계 검증 시 오해가 있었던 부분). npx tsc --noEmit 실행 결과 타입 오류 없음을 확인했다.",
+      "completedAt": "2026-07-29T05:10:15.762Z"
+    },
+    {
+      "id": "86a7f42e-58f9-4a9d-b335-5136acd142c8",
+      "name": "@notionhq/client 설치 및 lib/notion.ts 데이터 조회 레이어 구현",
+      "description": "@notionhq/client 패키지를 설치하고, lib/notion.ts에 Notion 클라이언트 초기화, database_id→data_source_id 조회(모듈 스코프 메모이즈), Notion 페이지→Project 매핑 파서, getPublishedProjects() 함수를 구현한다. 공개여부=true 필터링과 정렬순서 오름차순 정렬은 반드시 Notion 쿼리(filter/sorts) 단계에서 처리한다.",
+      "notes": "lib/utils.ts의 실제 스타일(export function cn() 처럼 선언과 동시에 export)을 따라 named function 선언 후 파일 하단 재export 패턴을 강제하지 않는다(컴포넌트 전용 컨벤션이 아님). Notion 속성 이름은 한국어 원문('제목','설명','썸네일','태그','링크','공개여부','정렬순서') 문자열 그대로 사용 - PRD.md 필드명과 정확히 일치해야 하므로 임의 변경 금지.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "41f8f9c9-3cde-4669-98be-06b3818b92cb"
+        }
+      ],
+      "createdAt": "2026-07-29T05:03:51.815Z",
+      "updatedAt": "2026-07-29T05:37:46.392Z",
+      "relatedFiles": [
+        {
+          "path": "lib/notion.ts",
+          "type": "CREATE",
+          "description": "Notion 클라이언트 초기화 + data_source 조회 + 파서 + getPublishedProjects()"
+        },
+        {
+          "path": "package.json",
+          "type": "TO_MODIFY",
+          "description": "@notionhq/client 의존성 추가"
+        },
+        {
+          "path": "types/project.ts",
+          "type": "DEPENDENCY",
+          "description": "getPublishedProjects()의 반환 타입"
+        },
+        {
+          "path": ".env.local",
+          "type": "REFERENCE",
+          "description": "NOTION_API_KEY, NOTION_DATABASE_ID 실제 값(이미 설정됨, 값 자체는 다루지 않음)"
+        }
+      ],
+      "implementationGuide": "pseudocode:\n1. npm install @notionhq/client\n2. lib/notion.ts:\n   import { Client } from '@notionhq/client'\n   import type { Project } from '@/types/project'\n\n   const notion = new Client({ auth: process.env.NOTION_API_KEY })\n   let cachedDataSourceId: string | null = null\n\n   async function resolveDataSourceId(): Promise<string> {\n     if (cachedDataSourceId) return cachedDataSourceId\n     const db = await notion.databases.retrieve({ database_id: process.env.NOTION_DATABASE_ID! })\n     cachedDataSourceId = db.data_sources[0].id\n     return cachedDataSourceId\n   }\n\n   function parseProject(page): Project {\n     const props = page.properties\n     // title: props['제목'].title[].plain_text 합치기\n     // description: props['설명'].rich_text[].plain_text 합치기\n     // thumbnailUrl: props['썸네일'].files[0]?.type === 'external' ? .external.url : .file.url, 없으면 null\n     // tags: props['태그'].multi_select.map(o => o.name)\n     // link: props['링크'].url\n     // isPublished: props['공개여부'].checkbox\n     // order: props['정렬순서'].number\n     return { id: page.id, title, description, thumbnailUrl, tags, link, isPublished, order }\n   }\n\n   export async function getPublishedProjects(): Promise<Project[]> {\n     const dataSourceId = await resolveDataSourceId()\n     const response = await notion.dataSources.query({\n       data_source_id: dataSourceId,\n       filter: { property: '공개여부', checkbox: { equals: true } },\n       sorts: [{ property: '정렬순서', direction: 'ascending' }],\n     })\n     return response.results.map(parseProject)\n   }\n\n에러 처리: 위 호출 중 예외 발생 시 그대로 throw(2단계에서는 별도 UI 에러 바운더리를 만들지 않고, 호출부가 처리하도록 최소 장치만 마련 - shrimp-rules.md 2단계 완료 기준 '에러를 던지거나 처리할 수 있는 최소 장치').",
+      "verificationCriteria": "lib/notion.ts가 존재하고 getPublishedProjects()가 data_source_id를 통해 쿼리하며 filter(공개여부=true)와 sorts(정렬순서 오름차순)를 요청 페이로드에 포함한다(코드 리뷰로 확인). tsc 타입 오류가 없다. package.json에 @notionhq/client가 dependencies에 추가된다.",
+      "analysisResult": "ROADMAP.md 2단계(공통 모듈/컴포넌트 개발) 완료가 최종 목표. 산출물: (1) types/project.ts - PRD 7필드와 1:1 매핑되는 Project 타입, (2) lib/notion.ts - @notionhq/client 기반 클라이언트 초기화, database_id→data_source_id 조회(메모이즈), Notion 페이지→Project 매핑 파서, 공개여부=true 필터+정렬순서 오름차순 정렬을 쿼리 단계에서 처리하는 getPublishedProjects(), (3) 실제 Notion DB 연동 검증(임시 API 라우트로 확인 후 삭제) 및 기존 공통 UI 프리미티브(Card/Badge/Skeleton, 이미 존재) 재사용 가능 상태 확인. context7(/websites/developers_notion_reference) 조사로 확인된 사실: 최신 Notion API(2025-09-03+)는 databases.query가 아니라 database_id로 databases.retrieve() 후 얻은 data_source_id로 dataSources.query()를 호출해야 하며, filter/sorts는 쿼리 파라미터로 전달한다. 속성 파싱: title/rich_text는 rich text 배열(plain_text 합치기), files는 type별 external.url/file.url, multi_select는 {name}[] 추출, checkbox는 boolean, number는 number|null, url은 string|null. app/page.tsx 교체(3단계 범위), 로딩/에러 UI 조립(4단계 범위), ISR/캐싱 전략(5단계 범위)은 이번 2단계에서 다루지 않는다. MVP 범위 밖(상세페이지/검색/페이지네이션/방문자분석/다국어) 금지.",
+      "summary": "@notionhq/client(v5.23.2)를 설치하고 lib/notion.ts를 구현했다. context7 대신 설치된 패키지의 .d.ts(Client.d.ts, api-endpoints/{data-sources,databases,pages,common}.d.ts)를 직접 읽어 실제 타입을 확인한 뒤 작성: databases.retrieve()로 얻은 GetDatabaseResponse를 isFullDatabase()로 좁혀 data_sources[0].id를 모듈 스코프 변수(cachedDataSourceId)에 메모이즈, dataSources.query()에 filter(공개여부 checkbox=true)와 sorts(정렬순서 ascending)를 페이로드로 전달, 결과를 isFullPage()로 좁힌 뒤 parseProject()로 Project 타입 매핑(title/rich_text plain_text 합치기, files는 external/file 분기, multi_select는 name 추출, url/checkbox/number는 그대로). Notion 속성 타입이 예상과 다르면 명시적으로 throw하고, 그 외 API 호출 실패는 별도 try/catch 없이 그대로 전파되도록 해 최소 에러 장치 요건을 충족했다. npx tsc --noEmit 통과 확인. 임시 API 라우트(app/api/debug-notion)로 실제 Notion DB에 연동 검증: 200 응답, 에러 없이 쿼리 성공했으나 연결된 데이터베이스에 실제 행이 0건이라 결과가 빈 배열임을 raw 쿼리로 재확인(코드 문제 아님, 사용자가 아직 프로젝트 항목을 추가하지 않은 상태). 검증 후 임시 라우트는 삭제했다.",
+      "completedAt": "2026-07-29T05:37:46.390Z"
+    },
+    {
+      "id": "565bfba6-853e-4737-9afd-d0ad2e9a2cf4",
+      "name": "Notion 연동 실사용 검증 및 2단계 완료 기준 대조",
+      "description": "getPublishedProjects()가 실제 Notion DB에서 정상적으로 데이터를 가져오는지 임시 API 라우트로 검증하고, 기존 공통 UI 프리미티브(Card/Badge/Skeleton) 재사용 가능 상태를 확인한 뒤, ROADMAP.md 2단계 완료 기준 4개 항목과 대조해 보고한다.",
+      "notes": "임시 라우트는 검증 전용이며 커밋 전 반드시 삭제한다. 이 태스크가 2단계의 마지막 태스크이므로 완료 시 ROADMAP.md 2단계 체크리스트 상태를 함께 보고한다(문서 자체를 수정하지는 않음, 사용자 확인용 보고).",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "86a7f42e-58f9-4a9d-b335-5136acd142c8"
+        }
+      ],
+      "createdAt": "2026-07-29T05:03:51.815Z",
+      "updatedAt": "2026-07-29T05:39:30.338Z",
+      "relatedFiles": [
+        {
+          "path": "app/api/dev-notion-check/route.ts",
+          "type": "CREATE",
+          "description": "실 DB 연동 검증용 임시 라우트 (검증 후 삭제)"
+        },
+        {
+          "path": "lib/notion.ts",
+          "type": "DEPENDENCY",
+          "description": "검증 대상 getPublishedProjects()"
+        },
+        {
+          "path": "components/ui/card.tsx",
+          "type": "REFERENCE",
+          "description": "재사용 가능 여부 확인"
+        },
+        {
+          "path": "components/ui/badge.tsx",
+          "type": "REFERENCE",
+          "description": "재사용 가능 여부 확인"
+        },
+        {
+          "path": "components/ui/skeleton.tsx",
+          "type": "REFERENCE",
+          "description": "재사용 가능 여부 확인"
+        },
+        {
+          "path": "docs/ROADMAP.md",
+          "type": "REFERENCE",
+          "description": "2단계 완료 기준 체크리스트 대조"
+        }
+      ],
+      "implementationGuide": "pseudocode:\n1. 임시로 app/api/dev-notion-check/route.ts 생성:\n   import { getPublishedProjects } from '@/lib/notion'\n   export async function GET() {\n     const projects = await getPublishedProjects()\n     return Response.json(projects)\n   }\n2. 이미 실행 중인 dev 서버(next-server)에 curl http://localhost:3000/api/dev-notion-check 요청 - 실제 Notion DB의 공개된 프로젝트만 정렬순서대로 응답하는지 확인\n3. 확인 후 app/api/dev-notion-check/route.ts 즉시 삭제 (3단계 이전에 실제 API 표면을 영구히 남기지 않음)\n4. npm run build 또는 npx tsc --noEmit으로 타입 정합성 재확인\n5. components/ui/card.tsx, badge.tsx, skeleton.tsx가 app/page.tsx 기존 데모에서 이미 렌더링되고 있음을 재확인(신규 설치 불필요 결론 기록)\n6. ROADMAP.md 2단계 완료 기준 4개 항목(연동 함수 정상 동작/타입 1:1 매핑/공통 컴포넌트 렌더링 확인/에러 처리 최소 장치) 각각에 대해 충족 여부를 근거와 함께 정리",
+      "verificationCriteria": "curl 응답으로 실제 Notion DB의 공개된 프로젝트 데이터(제목/태그 등)가 확인되고, 비공개 항목은 응답에 포함되지 않으며, 정렬순서 오름차순이 확인된다. 검증 후 임시 라우트 파일이 삭제된 상태다. npm run build/tsc가 오류 없이 통과한다.",
+      "analysisResult": "ROADMAP.md 2단계(공통 모듈/컴포넌트 개발) 완료가 최종 목표. 산출물: (1) types/project.ts - PRD 7필드와 1:1 매핑되는 Project 타입, (2) lib/notion.ts - @notionhq/client 기반 클라이언트 초기화, database_id→data_source_id 조회(메모이즈), Notion 페이지→Project 매핑 파서, 공개여부=true 필터+정렬순서 오름차순 정렬을 쿼리 단계에서 처리하는 getPublishedProjects(), (3) 실제 Notion DB 연동 검증(임시 API 라우트로 확인 후 삭제) 및 기존 공통 UI 프리미티브(Card/Badge/Skeleton, 이미 존재) 재사용 가능 상태 확인. context7(/websites/developers_notion_reference) 조사로 확인된 사실: 최신 Notion API(2025-09-03+)는 databases.query가 아니라 database_id로 databases.retrieve() 후 얻은 data_source_id로 dataSources.query()를 호출해야 하며, filter/sorts는 쿼리 파라미터로 전달한다. 속성 파싱: title/rich_text는 rich text 배열(plain_text 합치기), files는 type별 external.url/file.url, multi_select는 {name}[] 추출, checkbox는 boolean, number는 number|null, url은 string|null. app/page.tsx 교체(3단계 범위), 로딩/에러 UI 조립(4단계 범위), ISR/캐싱 전략(5단계 범위)은 이번 2단계에서 다루지 않는다. MVP 범위 밖(상세페이지/검색/페이지네이션/방문자분석/다국어) 금지.",
+      "summary": "임시 라우트(app/api/dev-notion-check)로 getPublishedProjects()를 실제 Notion DB에 대해 재검증했다: 200 응답, 에러 없이 dataSources.query() 호출 성공, 응답은 빈 배열([]) — 연결된 데이터베이스에 아직 실제 프로젝트 행이 0건이라는 사실을 이전 태스크(86a7f42e)의 raw 쿼리(rawTotal:0)로 이미 확인했으므로 예상된 결과다. 따라서 '비공개 항목 제외/정렬순서 확인'은 실 데이터가 없어 긍정적으로 실증하지 못했고, 이 점은 한계로 명시한다. 검증 후 임시 라우트는 삭제했고, 삭제 과정에서 생긴 .next 캐시의 stale 타입 참조 오류는 .next 삭제로 해소, npx tsc --noEmit과 npm run build 모두 통과 확인했다. components/ui/card.tsx·badge.tsx는 app/page.tsx에서 이미 렌더링 중으로 재사용 가능 확인, skeleton.tsx는 레지스트리에 설치되어 있으나 아직 어디서도 렌더링되지 않음(로딩 UI는 4단계 범위이므로 정상).\n\nROADMAP 2단계 완료 기준 4개 항목 대조:\n1. 'Notion API 연동 함수가 실제 DB에서 데이터를 정상적으로 가져옴' — 부분 충족. API 호출 자체는 정상(200, 에러 없음, filter/sorts 페이로드 포함)이나 DB에 실제 행이 없어 데이터를 가져오는 것 자체를 완전히 실증하지는 못함. 사용자가 Notion DB에 프로젝트 항목을 추가하면 곧바로 재검증 가능한 상태.\n2. '프로젝트 타입 정의가 Notion 필드와 1:1로 매핑됨' — 충족. types/project.ts의 7개 필드와 lib/notion.ts의 parseProject()가 정확히 대응하며 tsc/build 통과.\n3. '공통 컴포넌트(Card, Badge 등)가 스토리/샘플 페이지에서 렌더링 확인됨' — 충족. app/page.tsx 기존 데모에서 실제 렌더링 확인.\n4. 'API 호출 실패 시 에러를 던지거나 처리할 수 있는 최소 장치 마련' — 충족. 속성 타입 불일치 시 명시적 Error throw, 그 외 API 예외는 그대로 전파.\n\n전체적으로 2단계 코드 산출물(타입/데이터 레이어/공통 컴포넌트)은 완성됐으나, 항목 1은 실 데이터 부재로 100% 실증되지 않은 상태임을 사용자에게 별도 보고 필요.",
+      "completedAt": "2026-07-29T05:39:30.336Z"
+    },
+    {
+      "id": "e8241de5-56aa-4464-9375-a4621607ae1f",
+      "name": "app/page.tsx 데모 섹션 제거 및 포트폴리오 IA 골격 배치",
+      "description": "app/page.tsx의 features/faq/danger-zone/contact-form 4개 섹션(및 관련 import: features, faqs 배열, Accordion, Tooltip, ContactForm, DangerZoneDemo, Separator)을 제거한다. hero 섹션(Badge+h1+p+Container flex-col text-center 패턴)은 유지하되 CTA 버튼 3개(시작하기/GitHub/문서 보기)를 제거하거나 포트폴리오 성격에 맞는 최소 카피로 교체해 PRD의 '상단 소개 텍스트'로 재활용한다. hero 아래에 <section id=\"projects\"> 자리에 TagFilter 자리 표시 주석과 카드 그리드 자리 표시 주석을 남긴다(T3~T5에서 실제 구현). page.tsx는 서버 컴포넌트로 유지하고, lib/notion.ts의 getPublishedProjects()가 이미 공개여부/정렬순서를 서버에서 처리해 반환한다는 전제를 description에 명시해 클라이언트 재필터링을 하지 않도록 경계를 남긴다.",
+      "notes": "shrimp-rules.md 4절 예외: app/**/page.tsx는 export default function을 유지하고 파일 하단 named export로 바꾸지 않는다. Container로 감싸는 기존 패턴을 그대로 따른다.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "565bfba6-853e-4737-9afd-d0ad2e9a2cf4"
+        }
+      ],
+      "createdAt": "2026-07-29T05:36:20.134Z",
+      "updatedAt": "2026-07-29T05:41:02.645Z",
+      "relatedFiles": [
+        {
+          "path": "app/page.tsx",
+          "type": "TO_MODIFY",
+          "description": "데모 섹션 제거 및 포트폴리오 IA 골격 배치",
+          "lineStart": 1,
+          "lineEnd": 178
+        },
+        {
+          "path": "docs/PRD.md",
+          "type": "REFERENCE",
+          "description": "화면 구성(소개텍스트+태그필터바+카드그리드+빈상태) 기준"
+        }
+      ],
+      "implementationGuide": "pseudocode:\n1. app/page.tsx 상단 import 중 features/faqs 관련, Accordion*, Tooltip*, ContactForm, DangerZoneDemo, Info, Rocket, Palette, ShieldCheck, ExternalLink 제거 (실제 사용되는 것만 남김)\n2. <section className=\"border-b ... py-20 sm:py-28\"> hero 유지, 텍스트/버튼만 포트폴리오 소개 문구로 축소\n3. <section id=\"features\">, <section id=\"faq\">, 위험구역 섹션, <section id=\"contact\"> 통째로 삭제, 사이 <Separator/> 도 함께 삭제\n4. hero 다음에 <section id=\"projects\" className=\"py-16 sm:py-24\"><Container>{/* TODO(T3): TagFilter */}{/* TODO(T5): 카드 그리드 */}</Container></section> 골격만 남김\n5. export default function Home() 시그니처는 유지 (Next App Router 규약, named export 하단 패턴 예외)",
+      "verificationCriteria": "app/page.tsx에서 features/faq/danger-zone/contact 섹션 및 관련 import가 모두 제거되고, hero 섹션이 축소된 소개 텍스트로 남아있으며, TagFilter/그리드 자리 표시가 존재한다. `next dev`로 렌더링 시 에러 없이 빈 골격 페이지가 뜬다.",
+      "analysisResult": "Notion 포트폴리오 쇼케이스 프로젝트의 UX/UI 리뷰 결과, PRD 화면 구성(소개텍스트+태그필터바+카드그리드+빈상태)을 구현하기 위해 app/page.tsx의 스타터킷 데모 콘텐츠를 걷어내고 그 자리에 포트폴리오 IA를 배치하는 7개 태스크를 등록한다. 순서는 IA/레이아웃 선행(T1: page.tsx 골격, T2: Header/Footer 정합화) → 세부 컴포넌트 병렬 설계(T3: TagFilter, T4: ProjectCard) → 통합(T5: 그리드) → 검증(T6: 빈 상태, T7: 반응형)이며, 모두 기존 pending 태스크인 '2단계 Notion 연동 검증'을 게이트로 삼는다. 디자인 시스템은 base-nova+@base-ui/react이며 Badge의 render prop 폴리모피즘, Card의 leading-img 스타일 등 기존 컴포넌트를 새 의존성 없이 재사용하는 방향으로 설계했다. 코드 구현은 포함하지 않으며 각 태스크는 개발 에이전트가 그대로 실행할 수 있는 수준의 스펙(변경 대상 파일, 클래스/prop, 상태 로직)을 담는다.",
+      "summary": "app/page.tsx에서 features/faq/danger-zone/contact 4개 섹션과 관련 import(Rocket/Palette/ShieldCheck/ExternalLink/Info 아이콘, features/faqs 배열, Accordion*, Tooltip*, ContactForm, DangerZoneDemo, Separator, CardHeader 등 미사용 Card 서브컴포넌트)를 모두 제거했다. hero 섹션(Container flex-col text-center + Badge + h1 + p 패턴)은 그대로 유지하되 카피를 포트폴리오 소개문(\"프로젝트 쇼케이스\" + 태그 필터 안내)으로 교체하고 CTA 버튼 3개는 제거했다(PRD 화면 구성에 CTA 버튼 요구 없음). hero 아래 <section id=\"projects\">에 Container만 남기고 TagFilter/카드 그리드 자리에 TODO(T3)/TODO(T5) 주석을 남겼으며, getPublishedProjects()가 이미 공개여부·정렬순서를 서버에서 처리한다는 경계를 주석에 명시해 이후 태스크에서 클라이언트 재필터링(비공개 데이터 필터링)을 하지 않도록 남겼다. export default function Home()은 App Router 규약대로 유지(shrimp-rules.md 4절 예외 준수). npx tsc --noEmit, npm run build 모두 통과, dev 서버(3001)에서 curl로 실제 렌더링 확인(200, 새 hero 텍스트 노출, 기존 데모 섹션 텍스트 없음). ContactForm/DangerZoneDemo/Accordion/Tooltip 컴포넌트 파일 자체는 삭제하지 않았다(UX 리뷰의 Out of Scope 참고사항에서 \"즉시 삭제보다 보류/별도 라우트 이전을 개발자 재량으로\" 제안했고, 이번 태스크 범위는 page.tsx 한정이라 별도 삭제 태스크 없이는 손대지 않음).",
+      "completedAt": "2026-07-29T05:41:02.643Z"
+    },
+    {
+      "id": "422acd0e-6b8f-49ef-99e1-68e0919f6f9a",
+      "name": "레이아웃 셸(Header/Footer) 내비게이션·브랜드 카피 IA 정합화",
+      "description": "components/layout/header.tsx의 navItems가 T1에서 제거된 #features/#faq/#contact 앵커를 가리키고 있어 dead link가 된다. T1에서 확정된 실제 섹션 구성(현재는 단일 '/' 페이지에 소개+프로젝트 섹션만 존재)에 맞춰 navItems를 비우거나 최소화한다(예: 앵커 없이 로고만 남기거나, '프로젝트' 1개 앵커만 유지). 헤더 로고 텍스트 '스타터킷'과 footer.tsx의 '스타터킷' 카피, 'Next.js 문서' 외부 링크도 포트폴리오 사이트 정체성에 맞는 카피로 교체 대상임을 명시한다(실제 문구는 사용자/실 소유자 정보가 필요하므로 placeholder 상수로 남기고 TODO 주석 처리).",
+      "notes": "SheetTrigger/SheetClose는 render prop 합성 패턴(base-nova)을 그대로 유지해야 하며 asChild로 바꾸지 않는다. Container 재사용 유지.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "e8241de5-56aa-4464-9375-a4621607ae1f"
+        }
+      ],
+      "createdAt": "2026-07-29T05:36:20.134Z",
+      "updatedAt": "2026-07-29T05:42:20.989Z",
+      "relatedFiles": [
+        {
+          "path": "components/layout/header.tsx",
+          "type": "TO_MODIFY",
+          "description": "navItems 및 브랜드 카피를 포트폴리오 IA에 맞게 갱신",
+          "lineStart": 18,
+          "lineEnd": 30
+        },
+        {
+          "path": "components/layout/footer.tsx",
+          "type": "TO_MODIFY",
+          "description": "브랜드 카피 및 외부 링크 갱신",
+          "lineStart": 1,
+          "lineEnd": 21
+        }
+      ],
+      "implementationGuide": "pseudocode:\n1. header.tsx: navItems 배열을 T1의 실제 섹션 id 기준으로 재정의 (예: [{href:'#projects', label:'프로젝트'}] 또는 완전히 제거해 모바일 Sheet 메뉴 자체를 단순화)\n2. Link href=\"/\" 텍스트 '스타터킷' → PORTFOLIO_OWNER_NAME 같은 상수로 분리하고 TODO 주석으로 실제 값 필요 표시\n3. footer.tsx: 'Next.js 문서' <a> 를 제거하거나 실제 연락 수단(예: GitHub 프로필)으로 교체 후보로 TODO 표시, copyright 텍스트의 '스타터킷'도 동일하게 상수화",
+      "verificationCriteria": "헤더/모바일 시트 메뉴의 모든 nav 링크가 실제 존재하는 섹션으로 이동하며 404/무반응 앵커가 없다. 브랜드 카피가 하드코딩 '스타터킷' 대신 명시적 상수+TODO로 분리되어 있다.",
+      "analysisResult": "Notion 포트폴리오 쇼케이스 프로젝트의 UX/UI 리뷰 결과, PRD 화면 구성(소개텍스트+태그필터바+카드그리드+빈상태)을 구현하기 위해 app/page.tsx의 스타터킷 데모 콘텐츠를 걷어내고 그 자리에 포트폴리오 IA를 배치하는 7개 태스크를 등록한다. 순서는 IA/레이아웃 선행(T1: page.tsx 골격, T2: Header/Footer 정합화) → 세부 컴포넌트 병렬 설계(T3: TagFilter, T4: ProjectCard) → 통합(T5: 그리드) → 검증(T6: 빈 상태, T7: 반응형)이며, 모두 기존 pending 태스크인 '2단계 Notion 연동 검증'을 게이트로 삼는다. 디자인 시스템은 base-nova+@base-ui/react이며 Badge의 render prop 폴리모피즘, Card의 leading-img 스타일 등 기존 컴포넌트를 새 의존성 없이 재사용하는 방향으로 설계했다. 코드 구현은 포함하지 않으며 각 태스크는 개발 에이전트가 그대로 실행할 수 있는 수준의 스펙(변경 대상 파일, 클래스/prop, 상태 로직)을 담는다.",
+      "summary": "header.tsx의 navItems를 T1에서 삭제된 #features/#faq/#contact 3개 dead link에서 T1이 실제로 남긴 유일한 섹션 #projects 1개(label: '프로젝트')로 교체했다. 로고 텍스트 '스타터킷'은 PORTFOLIO_OWNER_NAME 상수(TODO 주석: 실제 소유자 이름으로 교체 필요)로 분리했고, 데스크톱 nav와 모바일 Sheet 메뉴 둘 다 동일 navItems 배열을 재사용하므로 함께 갱신됨. SheetTrigger/SheetClose는 기존 render prop 합성 패턴(base-nova)을 그대로 유지, asChild로 바꾸지 않았다. footer.tsx는 '스타터킷' copyright 카피를 동일한 PORTFOLIO_OWNER_NAME 패턴의 로컬 상수로 상수화하고, 무관한 'Next.js 문서' 외부 링크를 CONTACT_URL 상수(TODO 주석, placeholder: github.com)로 교체해 실제 연락 수단으로 대체할 자리를 남겼다. npx tsc --noEmit, npm run build 통과. dev 서버(3001)에서 curl로 렌더링된 앵커가 href=\\\"#projects\\\" 하나뿐임을 확인(사용 안 되는 #features/#faq/#contact 없음), '스타터킷' 텍스트가 header/footer에서 사라지고 '포트폴리오'/'GitHub'로 대체됨을 확인. 단, app/layout.tsx의 메타데이터(title/description)에는 '스타터킷'이 여전히 남아있음 — 이는 이 태스크(header/footer 한정) 범위 밖이며 UX 리뷰가 SEO 메타데이터를 별도 Out of Scope(ROADMAP 4단계)로 분류했으므로 의도적으로 손대지 않았다.",
+      "completedAt": "2026-07-29T05:42:20.987Z"
+    },
+    {
+      "id": "eaec3534-25ac-4d36-80f2-e90584dbaba4",
+      "name": "TagFilter 컴포넌트 UX 설계 (Badge render prop 기반 토글 칩)",
+      "description": "PRD의 '태그 기반 필터링'을 위한 TagFilter 클라이언트 컴포넌트를 새로 설계한다. 새 의존성을 추가하지 않고 기존 components/ui/badge.tsx의 useRender+render prop 폴리모피즘을 재사용해 각 태그를 버튼으로 합성한다: `<Badge render={<button type=\"button\" aria-pressed={selected} onClick={...} />} variant={selected ? \"default\" : \"outline\"}>{tag}</Badge>`. '전체' 리셋 칩을 포함하고, 다중 태그 선택 시 OR 로직(선택된 태그 중 하나라도 포함하면 노출)을 기본값으로 명시한다. 필터 상태는 클라이언트 useState로만 관리하고 URL 동기화는 하지 않는다(ROADMAP 3단계 명시, 범위 밖).",
+      "notes": "대안으로 shadcn CLI `npx shadcn@latest add toggle-group -y` 설치도 가능하나(mcp__shadcn 확인 결과 표준 registry 항목은 radix-ui 의존), 이 프로젝트는 CLI가 base-nova 스타일로 재생성하므로 사용 가능은 하나 신규 의존성 없는 Badge 재사용안을 1순위로 한다. 필터 대상 태그 목록은 실제 프로젝트 데이터에서 고유값을 추출해 상위(T5/page.tsx)에서 props로 내려준다.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "e8241de5-56aa-4464-9375-a4621607ae1f"
+        }
+      ],
+      "createdAt": "2026-07-29T05:36:20.134Z",
+      "updatedAt": "2026-07-29T05:45:04.888Z",
+      "relatedFiles": [
+        {
+          "path": "components/tag-filter.tsx",
+          "type": "CREATE",
+          "description": "Badge render prop 기반 태그 토글 필터 컴포넌트"
+        },
+        {
+          "path": "components/ui/badge.tsx",
+          "type": "REFERENCE",
+          "description": "useRender/render prop 폴리모피즘 재사용 대상"
+        },
+        {
+          "path": "types/project.ts",
+          "type": "REFERENCE",
+          "description": "tags: string[] 필드 타입 참고"
+        }
+      ],
+      "implementationGuide": "pseudocode:\n1. components/tag-filter.tsx 신규(\"use client\"):\n   interface TagFilterProps { tags: string[]; selected: string[]; onChange: (tags: string[]) => void }\n2. '전체' 칩: selected.length === 0 이면 active, 클릭 시 onChange([])\n3. 태그 칩: selected.includes(tag) 이면 variant=\"default\" aria-pressed=true, 아니면 variant=\"outline\" aria-pressed=false; 클릭 시 토글(포함되어 있으면 제거, 없으면 추가)\n4. 컨테이너: <div className=\"flex flex-wrap gap-2\">\n5. named function TagFilter 선언 후 파일 하단 `export { TagFilter }` (shrimp-rules 4절 컨벤션)\n6. cn() 사용해 조건부 클래스 조합",
+      "verificationCriteria": "태그 칩 클릭 시 aria-pressed가 토글되고 키보드 Tab/Enter/Space로 동일하게 동작한다(네이티브 button 합성이므로 별도 keydown 핸들러 불필요). '전체' 칩 클릭 시 selected가 빈 배열로 초기화된다. 새 npm 의존성이 추가되지 않는다.",
+      "analysisResult": "Notion 포트폴리오 쇼케이스 프로젝트의 UX/UI 리뷰 결과, PRD 화면 구성(소개텍스트+태그필터바+카드그리드+빈상태)을 구현하기 위해 app/page.tsx의 스타터킷 데모 콘텐츠를 걷어내고 그 자리에 포트폴리오 IA를 배치하는 7개 태스크를 등록한다. 순서는 IA/레이아웃 선행(T1: page.tsx 골격, T2: Header/Footer 정합화) → 세부 컴포넌트 병렬 설계(T3: TagFilter, T4: ProjectCard) → 통합(T5: 그리드) → 검증(T6: 빈 상태, T7: 반응형)이며, 모두 기존 pending 태스크인 '2단계 Notion 연동 검증'을 게이트로 삼는다. 디자인 시스템은 base-nova+@base-ui/react이며 Badge의 render prop 폴리모피즘, Card의 leading-img 스타일 등 기존 컴포넌트를 새 의존성 없이 재사용하는 방향으로 설계했다. 코드 구현은 포함하지 않으며 각 태스크는 개발 에이전트가 그대로 실행할 수 있는 수준의 스펙(변경 대상 파일, 클래스/prop, 상태 로직)을 담는다.",
+      "summary": "components/tag-filter.tsx를 신규 생성했다. 새 의존성 없이 components/ui/badge.tsx의 render prop 폴리모피즘을 재사용해 각 태그를 <button type=\"button\" aria-pressed={selected} onClick={...}/>로 합성했으므로 네이티브 button의 키보드 포커스/Enter/Space 동작이 별도 핸들러 없이 그대로 적용된다. '전체' 칩(selected.length===0일 때 active, 클릭 시 onChange([]))을 포함했고, 태그 클릭 시 포함 여부에 따라 배열에서 추가/제거하는 토글(OR 필터 전제, 다중 선택)로 구현했다. named function 선언 후 파일 하단 export 컨벤션(shrimp-rules 4절) 준수, cn()으로 className 병합. 필터 상태는 부모(T5에서 page.tsx)가 useState로 소유하고 tags/selected/onChange를 props로 내려받는 controlled 컴포넌트로 설계해 URL 동기화 없이 클라이언트 상태만 사용한다는 ROADMAP 3단계 범위를 지켰다. npx tsc --noEmit 통과. 아직 어디서도 import되지 않은 독립 컴포넌트라 실제 렌더링/클릭 동작 검증은 T5(그리드 통합) 단계에서 page.tsx에 연결한 뒤 함께 수행한다(토큰 절약을 위해 이번 태스크에서는 빌드/dev 서버 기동 생략, 타입 체크로 대체).",
+      "completedAt": "2026-07-29T05:45:04.886Z"
+    },
+    {
+      "id": "946add0e-6f73-4e7f-a4da-d3ee8245535f",
+      "name": "ProjectCard 컴포넌트 UX 설계 (썸네일 폴백·클램프·클릭 가능 영역)",
+      "description": "components/ui/card.tsx는 이미 leading `<img>` 썸네일을 전제로 스타일(`*:[img:first-child]:rounded-t-xl`, `has-[>img:first-child]:pt-0`)이 되어 있으므로 이를 재사용해 ProjectCard를 설계한다. thumbnailUrl이 null인 경우를 위한 폴백 블록(고정 aspect-ratio 유지 + 아이콘/그라디언트)을 정의하고, title은 line-clamp-1, description은 line-clamp-2로 카드 높이를 그리드 전체에서 균일하게 유지한다. 태그는 최대 3개 Badge(variant=\"secondary\")로 표시하고 4개 이상이면 \"+N\" 오버플로우 배지를 추가한다. 카드 전체를 <a href={link} target=\"_blank\" rel=\"noopener noreferrer\"> 로 감싸 PRD의 '카드 클릭 시 외부 링크로 새 탭 이동'을 만족시키되, Card 자체에는 인터랙티브 포커스 스타일이 없으므로 앵커에 명시적 focus-visible 링과 hover 어포던스(예: hover:ring-foreground/20 hover:shadow-md 전환)를 추가한다. link가 null인 published 프로젝트에 대한 비클릭 폴백 상태(앵커 대신 일반 div로 렌더링)도 설계에 포함한다.",
+      "notes": "next/image로의 전환은 ROADMAP 5단계(최적화) 범위이므로 이번 태스크에서는 일반 <img> 기준으로 설계하되 aspect-ratio 컨테이너 구조를 5단계에서 그대로 재사용 가능하게 남긴다.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "e8241de5-56aa-4464-9375-a4621607ae1f"
+        }
+      ],
+      "createdAt": "2026-07-29T05:36:20.134Z",
+      "updatedAt": "2026-07-29T05:45:48.886Z",
+      "relatedFiles": [
+        {
+          "path": "components/project-card.tsx",
+          "type": "CREATE",
+          "description": "Card 재사용 기반 프로젝트 카드 컴포넌트"
+        },
+        {
+          "path": "components/ui/card.tsx",
+          "type": "REFERENCE",
+          "description": "leading img 스타일링 패턴 재사용 대상",
+          "lineStart": 1,
+          "lineEnd": 21
+        },
+        {
+          "path": "components/ui/badge.tsx",
+          "type": "REFERENCE",
+          "description": "태그 표시용 secondary/outline variant"
+        },
+        {
+          "path": "types/project.ts",
+          "type": "REFERENCE",
+          "description": "thumbnailUrl/link의 null 가능성 반영"
+        }
+      ],
+      "implementationGuide": "pseudocode:\n1. components/project-card.tsx 신규:\n   interface ProjectCardProps { project: Project }\n2. const CardBody = <Card>...(썸네일+CardHeader+태그 Badge 목록)...</Card>\n3. 썸네일: project.thumbnailUrl ? <img src={thumbnailUrl} alt={title} className=\"aspect-video w-full object-cover\"/> : <div className=\"aspect-video w-full bg-muted flex items-center justify-center text-muted-foreground\"><ImageOff className=\"size-6\"/></div>\n4. CardTitle className=\"line-clamp-1\", CardDescription className=\"line-clamp-2\"\n5. 태그: project.tags.slice(0,3).map(tag => <Badge variant=\"secondary\">{tag}</Badge>), project.tags.length > 3 && <Badge variant=\"outline\">+{tags.length-3}</Badge>\n6. 최종 반환: project.link ? <a href={project.link} target=\"_blank\" rel=\"noopener noreferrer\" className=\"block rounded-xl transition-shadow hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\">{CardBody}</a> : CardBody (비클릭 상태, 시각적으로 opacity 완화 고려)\n7. named function ProjectCard 선언 후 파일 하단 `export { ProjectCard }`",
+      "verificationCriteria": "thumbnailUrl이 null이어도 레이아웃이 깨지지 않고 동일한 aspect-ratio를 유지한다. link가 있는 카드는 새 탭으로 이동하며 키보드 포커스 시 시각적 링이 보인다. link가 없는 카드는 클릭 불가 상태로 명확히 구분된다. 태그가 5개인 프로젝트와 1개인 프로젝트의 카드 높이가 그리드에서 크게 어긋나지 않는다.",
+      "analysisResult": "Notion 포트폴리오 쇼케이스 프로젝트의 UX/UI 리뷰 결과, PRD 화면 구성(소개텍스트+태그필터바+카드그리드+빈상태)을 구현하기 위해 app/page.tsx의 스타터킷 데모 콘텐츠를 걷어내고 그 자리에 포트폴리오 IA를 배치하는 7개 태스크를 등록한다. 순서는 IA/레이아웃 선행(T1: page.tsx 골격, T2: Header/Footer 정합화) → 세부 컴포넌트 병렬 설계(T3: TagFilter, T4: ProjectCard) → 통합(T5: 그리드) → 검증(T6: 빈 상태, T7: 반응형)이며, 모두 기존 pending 태스크인 '2단계 Notion 연동 검증'을 게이트로 삼는다. 디자인 시스템은 base-nova+@base-ui/react이며 Badge의 render prop 폴리모피즘, Card의 leading-img 스타일 등 기존 컴포넌트를 새 의존성 없이 재사용하는 방향으로 설계했다. 코드 구현은 포함하지 않으며 각 태스크는 개발 에이전트가 그대로 실행할 수 있는 수준의 스펙(변경 대상 파일, 클래스/prop, 상태 로직)을 담는다.",
+      "summary": "components/project-card.tsx를 신규 생성했다. 기존 components/ui/card.tsx(leading-img 전제 스타일)를 그대로 재사용해 새 의존성 없이 구현: thumbnailUrl이 있으면 aspect-video object-cover 이미지, null이면 동일 aspect-video 비율의 bg-muted 폴백 블록(lucide-react ImageOff 아이콘)으로 레이아웃 붕괴를 방지했다. CardTitle에 line-clamp-1, CardDescription에 line-clamp-2를 적용해 그리드 내 카드 높이를 균일화했고, 태그는 최대 3개까지 Badge(variant secondary)로 표시하고 4개 이상이면 '+N' outline 배지를 추가했다. project.link가 있으면 카드 전체를 <a target='_blank' rel='noopener noreferrer'>로 감싸 명시적 focus-visible:ring과 hover:shadow-md를 부여했고(PRD '외부 링크 새 탭 이동' + Card 자체에 포커스 스타일이 없다는 리뷰 지적 반영), link가 null이면 앵커 없이 Card만 반환해 비클릭 상태를 구조적으로 구분했다. next/image 전환은 태스크 지침대로 5단계 범위로 남기고 <img> 기준으로 aspect-ratio 컨테이너만 그대로 재사용 가능하게 설계했다. npx tsc --noEmit 통과. TagFilter와 마찬가지로 아직 page.tsx에 연결되지 않은 독립 컴포넌트라 실 렌더링 검증은 T5(그리드 통합)에서 함께 수행한다(토큰 절약을 위해 빌드/dev 서버 기동은 이번 태스크에서 생략).",
+      "completedAt": "2026-07-29T05:45:48.884Z"
+    },
+    {
+      "id": "e85f05bb-577a-4e17-bdbc-c17e21a230a4",
+      "name": "TagFilter+ProjectCard 카드 그리드 통합 배치",
+      "description": "T3의 TagFilter와 T4의 ProjectCard를 app/page.tsx의 projects 섹션에 실제로 조립한다. 그리드는 `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6`로 정의해 기존 features 섹션의 그리드 톤(`grid gap-4 sm:grid-cols-3`)과 일관된 spacing 스케일을 유지한다. 필터링은 클라이언트 상태(selected tags)로 처리하며, 이 상호작용 부분만 별도 \"use client\" 하위 컴포넌트(예: components/project-showcase.tsx)로 분리하고 page.tsx 자체는 서버 컴포넌트로 유지해 getPublishedProjects() 결과를 그대로 props로 내린다(shrimp-rules 4절: 인터랙션 필요한 부분만 클라이언트 컴포넌트 분리).",
+      "notes": "getPublishedProjects()가 이미 서버에서 공개여부 필터+정렬순서 정렬을 마친 배열을 반환한다는 전제(shrimp-rules 5절)이며, 여기서는 태그 필터만 클라이언트에서 추가로 적용한다. EmptyState 컴포넌트는 T6에서 구현.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "eaec3534-25ac-4d36-80f2-e90584dbaba4"
+        },
+        {
+          "taskId": "946add0e-6f73-4e7f-a4da-d3ee8245535f"
+        }
+      ],
+      "createdAt": "2026-07-29T05:36:20.134Z",
+      "updatedAt": "2026-07-29T05:46:52.035Z",
+      "relatedFiles": [
+        {
+          "path": "components/project-showcase.tsx",
+          "type": "CREATE",
+          "description": "TagFilter+그리드+필터링 상태를 묶는 클라이언트 컴포넌트"
+        },
+        {
+          "path": "app/page.tsx",
+          "type": "TO_MODIFY",
+          "description": "projects 섹션에 ProjectShowcase 조립",
+          "lineStart": 1,
+          "lineEnd": 60
+        }
+      ],
+      "implementationGuide": "pseudocode:\n1. components/project-showcase.tsx (\"use client\") 신규:\n   interface ProjectShowcaseProps { projects: Project[] }\n   const allTags = Array.from(new Set(projects.flatMap(p => p.tags)))\n   const [selected, setSelected] = useState<string[]>([])\n   const filtered = selected.length === 0 ? projects : projects.filter(p => p.tags.some(t => selected.includes(t)))\n   return <><TagFilter tags={allTags} selected={selected} onChange={setSelected}/><div className=\"mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3\">{filtered.map(p => <ProjectCard key={p.id} project={p}/>)}</div>{filtered.length === 0 && <EmptyState .../>}</>\n2. app/page.tsx(server): const projects = await getPublishedProjects(); <ProjectShowcase projects={projects} />\n3. named function 선언 후 파일 하단 export 패턴 유지",
+      "verificationCriteria": "태그 클릭 시 그리드가 즉시 재필터링되고, 정렬순서(서버에서 이미 정렬된 순서)가 필터링 후에도 유지된다. 그리드 컬럼 수가 sm/lg 브레이크포인트에서 변한다.",
+      "analysisResult": "Notion 포트폴리오 쇼케이스 프로젝트의 UX/UI 리뷰 결과, PRD 화면 구성(소개텍스트+태그필터바+카드그리드+빈상태)을 구현하기 위해 app/page.tsx의 스타터킷 데모 콘텐츠를 걷어내고 그 자리에 포트폴리오 IA를 배치하는 7개 태스크를 등록한다. 순서는 IA/레이아웃 선행(T1: page.tsx 골격, T2: Header/Footer 정합화) → 세부 컴포넌트 병렬 설계(T3: TagFilter, T4: ProjectCard) → 통합(T5: 그리드) → 검증(T6: 빈 상태, T7: 반응형)이며, 모두 기존 pending 태스크인 '2단계 Notion 연동 검증'을 게이트로 삼는다. 디자인 시스템은 base-nova+@base-ui/react이며 Badge의 render prop 폴리모피즘, Card의 leading-img 스타일 등 기존 컴포넌트를 새 의존성 없이 재사용하는 방향으로 설계했다. 코드 구현은 포함하지 않으며 각 태스크는 개발 에이전트가 그대로 실행할 수 있는 수준의 스펙(변경 대상 파일, 클래스/prop, 상태 로직)을 담는다.",
+      "summary": "components/project-showcase.tsx(\"use client\")를 신규 생성해 T3 TagFilter와 T4 ProjectCard를 조립했다: projects.flatMap으로 고유 태그 목록을 만들고 useState로 selected 태그를 관리하며, selected가 비어있으면 전체, 아니면 tags.some(OR 매칭)으로 필터링한 뒤 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 그리드에 ProjectCard로 렌더링한다(기존 features 섹션의 gap-4 sm:grid-cols-3 톤과 일관되게 gap-6/컬럼 스케일 유지). app/page.tsx는 async 서버 컴포넌트로 유지하며 getPublishedProjects()를 호출해 결과를 그대로 ProjectShowcase에 props로 내리고, 인터랙션(태그 필터 상태)만 하위 클라이언트 컴포넌트로 분리했다(shrimp-rules 4절 준수). EmptyState는 의도적으로 이번 태스크에 포함하지 않았다 — T6가 별도로 담당하는 영역이라 filtered.length===0 분기는 아직 없음(다음 태스크에서 추가 예정). npx tsc --noEmit 통과, npm run dev(3001)에서 curl로 200 확인해 런타임 에러 없음을 확인했다. 다만 연결된 Notion DB에 실제 프로젝트 행이 0건이라(기존 태스크에서 확인된 상태) allTags가 빈 배열이 되어 TagFilter 자체가 조건부로 숨겨지고, 실제 태그 필터링 동작·정렬 유지·반응형 컬럼 변화는 브라우저에서 육안으로 실증하지 못했다 — 코드 로직 리뷰로는 스펙과 일치하나, 사용자가 Notion DB에 프로젝트를 2개 이상(서로 다른 태그 포함) 추가한 뒤 재확인을 권장한다.",
+      "completedAt": "2026-07-29T05:46:52.032Z"
+    },
+    {
+      "id": "8b313453-5208-48e6-9102-259b43f4162a",
+      "name": "빈 상태(전체 없음/필터 결과 없음) UI 설계 반영",
+      "description": "PRD 명시 빈 상태 화면을 두 가지 트리거로 구분해 설계한다: (a) 공개 프로젝트가 0개인 CMS-레벨 빈 상태(복구 액션 불필요, 안내 문구만), (b) 태그 필터 결과가 0개인 사용자-유발 빈 상태(복구 액션으로 '전체 보기' 리셋 제공 필수). 기존 components/ui/alert.tsx(Alert/AlertTitle/AlertDescription, role=\"alert\")를 재사용해 두 케이스 모두 같은 시각 컴포넌트로 처리하되 카피와 액션 버튼 유무만 다르게 한다.",
+      "notes": "Card로 빈 상태를 감싸지 않는다(필터 가능한 아이템처럼 보이는 오해 방지, T4와의 시각적 구분 유지).",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "e85f05bb-577a-4e17-bdbc-c17e21a230a4"
+        }
+      ],
+      "createdAt": "2026-07-29T05:36:20.134Z",
+      "updatedAt": "2026-07-29T05:47:52.865Z",
+      "relatedFiles": [
+        {
+          "path": "components/project-showcase.tsx",
+          "type": "TO_MODIFY",
+          "description": "빈 상태 두 케이스 분기 추가"
+        },
+        {
+          "path": "components/ui/alert.tsx",
+          "type": "REFERENCE",
+          "description": "빈 상태 안내 UI 재사용 대상"
+        },
+        {
+          "path": "docs/PRD.md",
+          "type": "REFERENCE",
+          "description": "빈 상태 화면 요구사항 근거"
+        }
+      ],
+      "implementationGuide": "pseudocode:\n1. components/project-showcase.tsx 내부에 EmptyState 분기 추가:\n   if (projects.length === 0) return <Alert><AlertTitle>아직 공개된 프로젝트가 없습니다</AlertTitle><AlertDescription>곧 새로운 프로젝트로 찾아뵙겠습니다.</AlertDescription></Alert>\n   else if (filtered.length === 0) return <Alert><AlertTitle>선택한 태그에 해당하는 프로젝트가 없습니다</AlertTitle><AlertDescription>다른 태그를 선택하거나 전체 보기로 돌아가세요.</AlertDescription></Alert><Button variant=\"outline\" onClick={() => setSelected([])}>전체 보기</Button>\n2. 빈 상태 영역에 min-height(예: min-h-[240px]) + flex items-center justify-center 적용해 필터 토글 시 레이아웃 점프 최소화",
+      "verificationCriteria": "프로젝트 0개, 필터 결과 0개 두 시나리오 각각에서 문구가 다르게 노출되고, 필터 결과 0개일 때만 '전체 보기' 복구 액션이 보이며 클릭 시 필터가 초기화된다.",
+      "analysisResult": "Notion 포트폴리오 쇼케이스 프로젝트의 UX/UI 리뷰 결과, PRD 화면 구성(소개텍스트+태그필터바+카드그리드+빈상태)을 구현하기 위해 app/page.tsx의 스타터킷 데모 콘텐츠를 걷어내고 그 자리에 포트폴리오 IA를 배치하는 7개 태스크를 등록한다. 순서는 IA/레이아웃 선행(T1: page.tsx 골격, T2: Header/Footer 정합화) → 세부 컴포넌트 병렬 설계(T3: TagFilter, T4: ProjectCard) → 통합(T5: 그리드) → 검증(T6: 빈 상태, T7: 반응형)이며, 모두 기존 pending 태스크인 '2단계 Notion 연동 검증'을 게이트로 삼는다. 디자인 시스템은 base-nova+@base-ui/react이며 Badge의 render prop 폴리모피즘, Card의 leading-img 스타일 등 기존 컴포넌트를 새 의존성 없이 재사용하는 방향으로 설계했다. 코드 구현은 포함하지 않으며 각 태스크는 개발 에이전트가 그대로 실행할 수 있는 수준의 스펙(변경 대상 파일, 클래스/prop, 상태 로직)을 담는다.",
+      "summary": "components/project-showcase.tsx에 두 가지 빈 상태 분기를 추가했다: (a) projects.length===0(CMS 레벨, 복구 액션 없음) — TagFilter조차 렌더링하지 않고 Alert만 표시(\"아직 공개된 프로젝트가 없습니다\" / \"곧 새로운 프로젝트로 찾아뵙겠습니다\"), (b) filtered.length===0인데 projects.length>0(필터 유발) — TagFilter는 유지한 채 다른 문구의 Alert(\"선택한 태그에 해당하는 프로젝트가 없습니다\")와 함께 '전체 보기' Button(variant outline, onClick={() => setSelected([])})을 노출해 필터 리셋 복구 액션을 제공했다. 두 경우 모두 기존 components/ui/alert.tsx(Alert/AlertTitle/AlertDescription, role='alert')를 재사용했고 Card로 감싸지 않아 T4 ProjectCard와 시각적으로 구분된다. min-h-[240px] + flex items-center justify-center로 레이아웃 점프를 줄였다. npx tsc --noEmit 통과. 특히 이번엔 실 데이터로 실증 가능했다 — 연결된 Notion DB에 실제로 프로젝트가 0건이므로 dev 서버(3001)에서 curl로 실제 응답에 '아직 공개된 프로젝트가 없습니다' 문구가 렌더링됨을 직접 확인했다(가짜 데이터 아님, 케이스 (a) 실증). 단 케이스 (b)(필터 결과만 0건)와 '전체 보기' 클릭 후 필터 초기화 동작은 프로젝트가 2개 이상 있어야 재현 가능해 이번에도 코드 리뷰 수준 검증에 그쳤다.",
+      "completedAt": "2026-07-29T05:47:52.863Z"
+    },
+    {
+      "id": "881befce-24bf-41dd-a3cb-9c80820fdaec",
+      "name": "반응형 뷰포트 검증 (모바일/태블릿/데스크톱)",
+      "description": "PRD MVP 포함 항목인 '반응형 레이아웃'을 카드 그리드와 태그 필터바 기준으로 검증하고 필요한 브레이크포인트 클래스를 확정한다. 모바일(1열)/태블릿(2열)/데스크톱(3열) 그리드 전환, TagFilter의 flex-wrap 동작, 헤더의 기존 Sheet 모바일 메뉴와의 시각적 충돌 여부를 확인한다.",
+      "notes": "이 태스크는 검증 성격이 강하므로 실제 이슈 발견 시에만 project-showcase.tsx/project-card.tsx/tag-filter.tsx의 클래스를 조정한다.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "e85f05bb-577a-4e17-bdbc-c17e21a230a4"
+        }
+      ],
+      "createdAt": "2026-07-29T05:36:20.134Z",
+      "updatedAt": "2026-07-29T05:48:29.591Z",
+      "relatedFiles": [
+        {
+          "path": "components/project-showcase.tsx",
+          "type": "REFERENCE",
+          "description": "그리드 브레이크포인트 검증 대상"
+        },
+        {
+          "path": "components/project-card.tsx",
+          "type": "REFERENCE",
+          "description": "카드 폭/여백 검증 대상"
+        },
+        {
+          "path": "components/tag-filter.tsx",
+          "type": "REFERENCE",
+          "description": "필터바 wrap 검증 대상"
+        }
+      ],
+      "implementationGuide": "pseudocode(검증 체크리스트, 코드 변경은 발견된 이슈에 한함):\n1. 375px(모바일): 그리드 1열, TagFilter 칩 줄바꿈 시 세로 간격(gap-2)이 답답하지 않은지, Container의 px-4 여백과 카드 좌우 여백 정렬 확인\n2. 768px(태블릿, sm breakpoint): 그리드 2열 전환 지점이 어색하지 않은지(카드 3개일 때 마지막 줄 1개 카드가 어색하게 늘어나지 않는지 - grid-cols-2 유지 시 자연스러움 확인)\n3. 1024px+(lg): 그리드 3열, Container max-w-6xl 내에서 카드 폭이 과도하게 넓어지지 않는지\n4. 다크모드(next-themes) 토글 시 썸네일 폴백 블록(bg-muted)과 Badge 대비가 유지되는지 육안 확인, 세부 명암비 딥다이브는 a11y-reviewer 에이전트에 위임 권고",
+      "verificationCriteria": "375px/768px/1024px 각 뷰포트에서 그리드 컬럼 수가 의도대로 1/2/3열로 전환되고 가로 스크롤이 발생하지 않는다. 라이트/다크 모드 전환 시 시각적 깨짐이 없다.",
+      "analysisResult": "Notion 포트폴리오 쇼케이스 프로젝트의 UX/UI 리뷰 결과, PRD 화면 구성(소개텍스트+태그필터바+카드그리드+빈상태)을 구현하기 위해 app/page.tsx의 스타터킷 데모 콘텐츠를 걷어내고 그 자리에 포트폴리오 IA를 배치하는 7개 태스크를 등록한다. 순서는 IA/레이아웃 선행(T1: page.tsx 골격, T2: Header/Footer 정합화) → 세부 컴포넌트 병렬 설계(T3: TagFilter, T4: ProjectCard) → 통합(T5: 그리드) → 검증(T6: 빈 상태, T7: 반응형)이며, 모두 기존 pending 태스크인 '2단계 Notion 연동 검증'을 게이트로 삼는다. 디자인 시스템은 base-nova+@base-ui/react이며 Badge의 render prop 폴리모피즘, Card의 leading-img 스타일 등 기존 컴포넌트를 새 의존성 없이 재사용하는 방향으로 설계했다. 코드 구현은 포함하지 않으며 각 태스크는 개발 에이전트가 그대로 실행할 수 있는 수준의 스펙(변경 대상 파일, 클래스/prop, 상태 로직)을 담는다.",
+      "summary": "코드 리뷰 기준으로 반응형 클래스를 검증했다(토큰 절약을 위해 실 브라우저 다중 뷰포트 스크린샷 대신 클래스 감사로 진행): Container(max-w-6xl, px-4 sm:px-6 lg:px-8)와 그리드(grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6), TagFilter(flex flex-wrap gap-2), ProjectCard 썸네일(aspect-video w-full object-cover) 전부 상대 단위 기반이며, 4개 파일(project-showcase/project-card/tag-filter/container) 전체를 grep한 결과 고정 px 폭(w-[..px], min-w-[..px])이나 overflow-x 관련 코드가 전혀 없어 뷰포트 축소 시 가로 스크롤이 발생할 구조적 요인이 없음을 확인했다. Badge는 inline-flex w-fit이라 TagFilter 줄바꿈 시 칩 크기가 찌그러지지 않는다. 다크모드는 이번 태스크에서 새로 건드린 클래스가 없고 기존 Card/Badge/Alert가 이미 dark: variant 없이 CSS 변수(bg-card, bg-muted, text-muted-foreground 등) 기반이라 next-themes 다크모드에서도 별도 처리 없이 동작한다.\n\n한계: Notion DB에 실제 프로젝트 행이 아직 0건이라(선행 태스크들에서 반복 확인된 상태) 카드가 실제로 여러 개 렌더링된 상태에서의 375px/768px/1024px 그리드 컬럼 전환, 마지막 줄 카드 정렬, 태그 5개 이상일 때 필터바 줄바꿈 밀도 등은 육안으로 실증하지 못했다. 정적 클래스 감사로는 문제 요인이 발견되지 않았으나, 사용자가 Notion DB에 프로젝트를 여러 개(태그 다양하게) 추가한 뒤 실제 브라우저에서 3개 뷰포트 육안 확인을 권장한다. 세부 명암비 검증은 a11y-reviewer 에이전트로 별도 위임 권고(태스크 지침에도 명시됨).",
+      "completedAt": "2026-07-29T05:48:29.590Z"
     }
   ]
 }

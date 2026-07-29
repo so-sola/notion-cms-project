@@ -15,18 +15,17 @@ import {
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Container } from "@/components/layout/container"
 
-const navItems = [
-  { href: "#features", label: "기능" },
-  { href: "#faq", label: "FAQ" },
-  { href: "#contact", label: "문의" },
-]
+// TODO: 실제 포트폴리오 소유자 이름/브랜드명으로 교체
+const PORTFOLIO_OWNER_NAME = "포트폴리오"
+
+const navItems = [{ href: "#projects", label: "프로젝트" }]
 
 function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-sm">
       <Container className="flex h-14 items-center justify-between">
         <Link href="/" className="font-heading text-sm font-semibold">
-          스타터킷
+          {PORTFOLIO_OWNER_NAME}
         </Link>
 
         <nav className="hidden items-center gap-6 text-sm text-muted-foreground md:flex">
