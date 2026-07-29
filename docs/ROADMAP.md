@@ -127,10 +127,12 @@ PRD의 MVP 핵심 가치(카드 그리드 조회, 태그 필터링, 외부 링�
 0.5일 ~ 1일
 
 ### 완료 기준
-- [ ] 썸네일 이미지가 `next/image`로 최적화되어 로드됨
-- [ ] Notion 데이터 갱신이 합리적인 주기로 반영됨 (캐시 전략 확정)
+- [x] 썸네일 이미지가 `next/image`로 최적화되어 로드됨
+- [x] Notion 데이터 갱신이 합리적인 주기로 반영됨 (캐시 전략 확정)
 - [ ] 배포 환경에서 환경 변수가 정상 동작함
 - [ ] 프로덕션 URL에서 전체 기능(그리드/필터/외부 링크)이 정상 작동함
+
+> 참고: `next.config.ts`에 Notion 업로드 파일 도메인(`prod-files-secure.s3.us-west-2.amazonaws.com`)을 등록하고 `ProjectCard`를 `next/image`(`fill` 모드)로 전환했다. Notion 서명 URL이 1시간 후 만료된다는 공식 경고에 맞춰 `app/page.tsx`에 `revalidate = 600`(10분)을 설정했고, 빌드 출력에서 `Revalidate: 10m`으로 정상 반영됨을 확인했다. 프로덕션 빌드 기준 Lighthouse 점검 결과 Performance 93 / Accessibility 100 / Best Practices 100 / SEO 100 (LCP 3.3s — 현재 Notion DB에 실제 썸네일이 없어 이미지 로딩이 반영되지 않은 수치이므로 실제 콘텐츠 채운 뒤 재점검 권장). 배포 환경 변수 등록과 실 배포(Vercel)는 사용자가 직접 진행하기로 결정해 이번 범위에서 제외했다 — 안내 문서만 별도로 전달함.
 
 ---
 

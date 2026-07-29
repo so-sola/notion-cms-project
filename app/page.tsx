@@ -5,6 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { ProjectShowcaseSection } from "@/components/project-showcase-section";
 import { ProjectShowcaseSkeleton } from "@/components/project-showcase-skeleton";
 
+// Notion 서명 URL이 1시간 후 만료되므로 그보다 충분히 짧은 주기로 재검증
+export const revalidate = 600;
+
 export default function Home() {
   return (
     <>
