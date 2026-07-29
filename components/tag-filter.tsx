@@ -7,10 +7,19 @@ interface TagFilterProps {
   tags: string[]
   selected: string[]
   onChange: (tags: string[]) => void
+  tagCounts?: Record<string, number>
+  totalCount?: number
   className?: string
 }
 
-function TagFilter({ tags, selected, onChange, className }: TagFilterProps) {
+function TagFilter({
+  tags,
+  selected,
+  onChange,
+  tagCounts,
+  totalCount,
+  className,
+}: TagFilterProps) {
   const toggleTag = (tag: string) => {
     onChange(
       selected.includes(tag)
@@ -32,6 +41,9 @@ function TagFilter({ tags, selected, onChange, className }: TagFilterProps) {
         }
       >
         전체
+        {totalCount !== undefined && (
+          <span className="opacity-70">{totalCount}</span>
+        )}
       </Badge>
       {tags.map((tag) => {
         const isSelected = selected.includes(tag)
@@ -48,6 +60,9 @@ function TagFilter({ tags, selected, onChange, className }: TagFilterProps) {
             }
           >
             {tag}
+            {tagCounts?.[tag] !== undefined && (
+              <span className="opacity-70">{tagCounts[tag]}</span>
+            )}
           </Badge>
         )
       })}
