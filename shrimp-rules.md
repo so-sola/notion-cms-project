@@ -50,7 +50,7 @@
 - Notion 연동 레이어를 만들 때 파일 위치를 다음과 같이 고정한다:
   - `lib/notion.ts`: `@notionhq/client` 초기화 + `getPublishedProjects()` 등 DB 조회 함수 + Notion 응답 → 프로젝트 타입 매핑 파서
   - `types/project.ts`: 프로젝트 타입 정의 (PRD 필드와 1:1 매핑)
-- `docs/PRD.md`의 Notion DB 필드는 다음과 같이 고정 매핑한다. 필드명을 임의로 바꾸거나 새 필드를 추가로 상정하지 않는다.
+- `docs/PRD.md`의 Notion DB 필드는 다음과 같이 고정 매핑한다. 필드명을 임의로 바꾸거나 새 필드를 추가로 상정하지 않는다 (단, V2 1단계에서 사용자가 확정한 케이스 스터디 4개 Rich Text 속성은 예외).
 
   | Notion 필드 | 타입 | 매핑 |
   |---|---|---|
@@ -61,6 +61,10 @@
   | 링크 | URL | GitHub/데모 링크 |
   | 공개여부 | Checkbox | `true`인 항목만 조회 |
   | 정렬순서 | Number | 오름차순 정렬 (선택 필드) |
+  | 문제 정의 | Rich Text | 상세 페이지 케이스 스터디 "문제 정의" 섹션 (V2) |
+  | 목표 | Rich Text | 상세 페이지 케이스 스터디 "목표" 섹션 (V2) |
+  | 과정 | Rich Text | 상세 페이지 케이스 스터디 "과정" 섹션 (V2) |
+  | 결과 | Rich Text | 상세 페이지 케이스 스터디 "결과" 섹션 (V2) |
 
 - **공개여부 필터링과 정렬순서 정렬은 반드시 서버(`lib/notion.ts`의 조회 함수 내부, Notion 쿼리 단계)에서 처리한다.** 비공개 프로젝트 데이터를 클라이언트로 내려보낸 뒤 클라이언트에서 필터링하지 않는다.
 - 환경 변수는 `NOTION_API_KEY`, `NOTION_DATABASE_ID` 두 개로 고정한다 (`docs/PRD.md`, `docs/ROADMAP.md` 명시). 이 레이어를 처음 구현할 때 `.env.example`을 함께 생성하고, `.env.local`은 절대 커밋하지 않는다 (`.gitignore`에 이미 `.env*` 포함되어 있음 — 유지할 것).

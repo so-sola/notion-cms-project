@@ -1,5 +1,6 @@
 import { ImageOff } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -56,19 +57,13 @@ function ProjectCard({ project }: ProjectCardProps) {
     </Card>
   )
 
-  if (!project.link) {
-    return cardBody
-  }
-
   return (
-    <a
-      href={project.link}
-      target="_blank"
-      rel="noopener noreferrer"
+    <Link
+      href={`/projects/${project.id}`}
       className="block rounded-xl transition-shadow hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       {cardBody}
-    </a>
+    </Link>
   )
 }
 

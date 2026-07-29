@@ -14,4 +14,12 @@ export interface Project {
   isPublished: boolean
   /** 정렬순서 (선택 필드) */
   order: number | null
+  /** 케이스 스터디: 문제 정의 */
+  problemDefinition: string
+  /** 케이스 스터디: 목표 */
+  goal: string
+  /** 케이스 스터디: 과정 */
+  process: string
+  /** 케이스 스터디: 결과 */
+  result: string
 }

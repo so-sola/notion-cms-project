@@ -1,3 +1,5 @@
+import { cache } from 'react'
+
 import { Client, isFullDatabase, isFullPage } from '@notionhq/client'
 import type { PageObjectResponse } from '@notionhq/client'
 import type { Project } from '@/types/project'
@@ -43,6 +45,10 @@ function parseProject(page: PageObjectResponse): Project {
   const link = properties['링크']
   const isPublished = properties['공개여부']
   const order = properties['정렬순서']
+  const problemDefinition = properties['문제 정의']
+  const goal = properties['목표']
+  const process = properties['과정']
+  const result = properties['결과']
 
   if (
     title.type !== 'title' ||
@@ -50,7 +56,11 @@ function parseProject(page: PageObjectResponse): Project {
     tags.type !== 'multi_select' ||
     link.type !== 'url' ||
     isPublished.type !== 'checkbox' ||
-    order.type !== 'number'
+    order.type !== 'number' ||
+    problemDefinition.type !== 'rich_text' ||
+    goal.type !== 'rich_text' ||
+    process.type !== 'rich_text' ||
+    result.type !== 'rich_text'
   ) {
     throw new Error(`Notion 프로젝트 속성 타입이 예상과 다릅니다 (page id: ${page.id})`)
   }
@@ -64,6 +74,10 @@ function parseProject(page: PageObjectResponse): Project {
     link: link.url,
     isPublished: isPublished.checkbox,
     order: order.number,
+    problemDefinition: getPlainText(problemDefinition.rich_text),
+    goal: getPlainText(goal.rich_text),
+    process: getPlainText(process.rich_text),
+    result: getPlainText(result.rich_text),
   }
 }
 
@@ -78,3 +92,20 @@ export async function getPublishedProjects(): Promise<Project[]> {
 
   return response.results.filter(isFullPage).map(parseProject)
 }
+
+async function getProjectByIdUncached(id: string): Promise<Project | null> {
+  let page
+
+  try {
+    page = await notion.pages.retrieve({ page_id: id })
+  } catch {
+    return null
+  }
+
+  if (!isFullPage(page)) return null
+
+  const project = parseProject(page)
+  return project.isPublished ? project : null
+}
+
+export const getProjectById = cache(getProjectByIdUncached)
