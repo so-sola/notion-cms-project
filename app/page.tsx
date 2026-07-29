@@ -1,11 +1,11 @@
+import { Suspense } from "react";
+
 import { Container } from "@/components/layout/container";
 import { Badge } from "@/components/ui/badge";
-import { ProjectShowcase } from "@/components/project-showcase";
-import { getPublishedProjects } from "@/lib/notion";
+import { ProjectShowcaseSection } from "@/components/project-showcase-section";
+import { ProjectShowcaseSkeleton } from "@/components/project-showcase-skeleton";
 
-export default async function Home() {
-  const projects = await getPublishedProjects();
-
+export default function Home() {
   return (
     <>
       <section className="border-b border-border py-20 sm:py-28">
@@ -23,7 +23,9 @@ export default async function Home() {
 
       <section id="projects" className="py-16 sm:py-24">
         <Container>
-          <ProjectShowcase projects={projects} />
+          <Suspense fallback={<ProjectShowcaseSkeleton />}>
+            <ProjectShowcaseSection />
+          </Suspense>
         </Container>
       </section>
     </>

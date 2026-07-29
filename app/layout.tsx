@@ -19,8 +19,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Next.js 스타터킷",
-  description: "Next.js App Router + shadcn/ui로 구성된 웹 스타터킷",
+  title: "프로젝트 쇼케이스 | Notion 포트폴리오",
+  description:
+    "직접 만든 프로젝트들을 모아둔 공간입니다. 태그로 필터링해 관심 있는 작업을 살펴보세요.",
+  openGraph: {
+    title: "프로젝트 쇼케이스 | Notion 포트폴리오",
+    description:
+      "직접 만든 프로젝트들을 모아둔 공간입니다. 태그로 필터링해 관심 있는 작업을 살펴보세요.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
